@@ -1,0 +1,103 @@
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75vh;
+    min-height: 500px;
+    padding: 10px;
+    margin-top: 50px;
+}
+
+.calculator {
+    border: 2px black solid;
+    border-radius: 15px;
+    padding: 20px;
+    width: 400px;
+    background-color: rgb(173, 171, 171);
+}
+
+div {
+    display: block;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #eee;
+    line-height: 1.6;
+    margin-bottom: 100px;
+    position: relative;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+button {
+
+    background-color: #eee;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 20px;
+    border: 2px black solid;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    outline: none;
+}
+
+button:hover {
+    background-color: lightgray;
+}
+
+.buttonsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+
+.span2 {
+    grid-column: span 2;
+}
+
+#delete1 {
+    background-color: rgb(165, 165, 255);
+}
+
+#delete1:hover {
+    background-color: rgb(202, 202, 251);
+}
+
+#clear {
+    background-color: rgb(251, 162, 152)
+}
+
+#clear:hover {
+    background-color: rgb(251, 201, 195)
+
+}
+
+.screen {
+    padding: 10px 20px;
+    border: 2px black solid;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #eee;
+    text-align: right;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.screen-last {
+    min-height: 32px;
+    font-size: 20px;
+}
+
+.screen-current {
+    min-height: 64px;
+    font-size: 40px;
+}
