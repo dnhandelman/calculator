@@ -171,6 +171,12 @@ function clearScreen() {
     console.clear()
 }
 
+//DELETE
+delete1.addEventListener("click", function () {
+let deletedString = currentScreen.textContent.slice(0, -1)
+currentScreen.textContent = deletedString
+})
+
 //OPERATIONS
 let multiplyCalculation = function (a, b) {
     result = currentScreenValue * secondValue
