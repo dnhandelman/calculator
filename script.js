@@ -1,3 +1,4 @@
+//DOM
 let one = document.querySelector('#one')
 let two = document.querySelector('#two')
 let three = document.querySelector('#three')
@@ -22,18 +23,17 @@ let currentScreen = document.querySelector('.screen-current')
 let lastScreen = document.querySelector('.screen-last')
 let currentOperation = document.querySelector('#currentOperationScreen')
 
-let currentScreenValue = 0
-let lastScreenValue = 0
-let operand = ""
+let currentScreenValue = null
+let lastScreenValue = null
+let firstOperand = ""
+let shouldResetScreen = false
+let secondOperand = ''
 
-/* let currentValue = function enteredValues (a,b,c) {
-    a = 
-} */
 
+//EventListeners
 one.addEventListener("click", printScreenCurrent1)
 function printScreenCurrent1() {
-    currentScreen.innerHTML += 1
-   
+    currentScreen.textContent += 1
 }
 
 two.addEventListener("click", printScreenCurrent2)
@@ -91,74 +91,51 @@ function printScreenCurrentDecimal() {
 add.addEventListener("click", function () {
     currentScreenValue = Number(currentScreen.textContent)
     lastScreen.textContent = currentScreenValue + "+"
-    operand = '+'
-    currentScreen.textContent = 0
+    firstOperand = '+'
+    currentScreen.textContent = ""
     console.log(`currentScreenValue is ${currentScreenValue}`)
-})
-add.addEventListener("click", function () {
-    currentScreen.textContent = Number(0 + currentScreen.textContent)
 })
 
 // SUBTRACT
-/* subtract.addEventListener("click", printScreenLastSubtract)
-function printScreenLastSubtract() {
-    lastScreen.textContent += "-";
-} */
 subtract.addEventListener("click", function () {
     currentScreenValue = Number(currentScreen.textContent)
     lastScreen.textContent = currentScreenValue + "-"
-    operand = '-'
-    currentScreen.textContent = 0
+    firstOperand = '-'
+    currentScreen.textContent = ""
     console.log(`currentScreenValue is ${currentScreenValue}`)
 })
-add.addEventListener("click", function () {
-    currentScreen.textContent = Number(0 + currentScreen.textContent)
-})
+
 
 // DIVIDE
-/* divide.addEventListener("click", printScreenLastDivide)
-function printScreenLastDivide() {
-    lastScreen.textContent += "÷";
-} */
 divide.addEventListener("click", function () {
     currentScreenValue = Number(currentScreen.textContent)
     lastScreen.textContent = currentScreenValue + "÷"
-    operand = '÷'
-    currentScreen.textContent = 0
+    firstOperand = '÷'
+    currentScreen.textContent = ""
     console.log(`currentScreenValue is ${currentScreenValue}`)
-})
-add.addEventListener("click", function () {
-    currentScreen.textContent = Number(0 + currentScreen.textContent)
 })
 
 // MULTIPLY
-/* multiply.addEventListener("click", printScreenLastMultiply)
-function printScreenLastMultiply() {
-    lastScreen.textContent += "×";
-} */
 multiply.addEventListener("click", function () {
     currentScreenValue = Number(currentScreen.textContent)
     lastScreen.textContent = currentScreenValue + "×"
-    operand = '×'
-    currentScreen.textContent = 0
+    firstOperand = '×'
+    currentScreen.textContent = ""
     console.log(`currentScreenValue is ${currentScreenValue}`)
 })
-add.addEventListener("click", function () {
-    currentScreen.textContent = Number(0 + currentScreen.textContent)
-})
+
 
 // EQUAL
-equal.addEventListener("click", function () {
-    secondValue = Number(0 + currentScreen.textContent)
+equal.addEventListener("click", onEqual)
+function onEqual () {
+    secondValue = Number(currentScreen.textContent)
     lastScreen.textContent += `${secondValue}= `
     operate()
     currentScreen.textContent = result
     console.log(`the secondValue is ${secondValue}`)
     console.log(`the result is ${result}`)
     currentScreenValue = result 
-    // lastScreen.textContent += "=";
-    //currentScreen.textContent = result
-})
+}
 
 // CLEAR
 clear.addEventListener("click", clearScreen)
@@ -167,7 +144,8 @@ function clearScreen() {
     document.querySelector(".screen-current").innerHTML = ""
     lastScreenValue = 0
     currentScreenValue = 0
-    operand = ""
+    firstOperand = ""
+    secondOperand = ""
     console.clear()
 }
 
@@ -178,41 +156,65 @@ currentScreen.textContent = deletedString
 })
 
 //OPERATIONS
-let multiplyCalculation = function (a, b) {
+let multiplyCalculation = function () {
     result = currentScreenValue * secondValue
-    result = Math.round((result + Number.EPSILON) * 10000000) / 10000000
+    result = Math.round((result + Number.EPSILON) * 1000000) / 1000000
     return result;
 }
 
-let divideCalculation = function (a, b) {
+let divideCalculation = function () {
     result = currentScreenValue / secondValue;
-    result = Math.round((result + Number.EPSILON) * 10000000) / 10000000
+    result = Math.round((result + Number.EPSILON) * 1000000) / 1000000
     return result;
 }
 
-let addCalculation = function (a, b) {
+let addCalculation = function () {
     result = currentScreenValue + secondValue;
-    result = Math.round((result + Number.EPSILON) * 10000000) / 10000000
+    result = Math.round((result + Number.EPSILON) * 1000000) / 1000000
     return result;
 }
 
-let subtractCalculation = function (a, b) {
+let subtractCalculation = function () {
     result = currentScreenValue - secondValue;
-    result = Math.round((result + Number.EPSILON) * 10000000) / 10000000
+    result = Math.round((result + Number.EPSILON) * 1000000) / 1000000
     return result;
 }
 
 let operate = function () {
-    if (operand == '+') {
-        addCalculation(currentScreenValue, secondValue)
-    } else if (operand == '-') {
-        subtractCalculation(currentScreenValue, secondValue)
-    } else if (operand == '×') {
-        multiplyCalculation(currentScreenValue, secondValue)
-    } else  {
-        divideCalculation(currentScreenValue, secondValue)
-    } 
+    //if (typeof currentScreenValue === 'number' && typeof secondValue === 'number' && typeof operand === 'string') {
+        if (firstOperand == '+') {
+            addCalculation(currentScreenValue, secondValue)
+        } else if (firstOperand == '-') {
+            subtractCalculation(currentScreenValue, secondValue)
+        } else if (firstOperand == '×') {
+            multiplyCalculation(currentScreenValue, secondValue)
+        } else  {
+            divideCalculation(currentScreenValue, secondValue)
+        } 
+    //}
 }
+
+/* function setOperation(operator) {
+    if (currentOperation !== null) evaluate()
+    firstOperand = currentOperationScreen.textContent
+    currentOperation = operator
+    lastOperationScreen.textContent = `${firstOperand} ${currentOperation}`
+    shouldResetScreen = true
+  }
+
+  function evaluate() {
+    if (currentOperation === null || shouldResetScreen) return
+    if (currentOperation === '÷' && currentOperationScreen.textContent === '0') {
+      alert("You can't divide by 0!")
+      return
+    }
+    secondOperand = currentOperationScreen.textContent
+    currentOperationScreen.textContent = roundResult(
+      operate(currentOperation, firstOperand, secondOperand)
+    )
+    lastOperationScreen.textContent = `${firstOperand} ${currentOperation} ${secondOperand} =`
+    currentOperation = null
+  } */
 
 
 

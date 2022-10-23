@@ -9,11 +9,11 @@
 }
 
 .calculator {
-    border: 2px black solid;
+    border: 2px rgb(0, 0, 0) solid;
     border-radius: 15px;
     padding: 20px;
     width: 400px;
-    background-color: rgb(173, 171, 171);
+    background-color: rgb(173, 173, 171);
 }
 
 div {
@@ -48,6 +48,10 @@ button {
     text-align: center;
     align-items: flex-start;
     outline: none;
+}
+
+#equal {
+    background-color: rgb(177, 255, 255);
 }
 
 button:hover {
